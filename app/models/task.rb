@@ -8,11 +8,11 @@ class Task < ActiveRecord::Base
   validates :description, length: { maximum: 500 }
 
   state_machine initial: :new_task do
-    event(:send_for_archive) { transition new_task: :archive, released: :archive }
+    event(:send_for_archiving) { transition new_task: :archive, released: :archive }
     event(:send_for_development) do
-      transition new_task: :in_development, in_qa: :to_development, in_code_review: :in_development
+      transition new_task: :in_development, in_qa: :in_development, in_code_review: :in_development
     end
-    event(:send_for_qa) { transition in_development: :to_qa }
+    event(:send_for_qa) { transition in_development: :in_qa }
     event(:send_for_code_review) { transition in_qa: :in_code_review }
     event(:send_for_prerelease) { transition in_code_review: :ready_for_release }
     event(:send_for_release) { transition ready_for_release: :released }

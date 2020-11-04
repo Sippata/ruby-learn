@@ -3,7 +3,7 @@ FactoryBot.define do
     first_name
     last_name
     password
-    email { "#{generate(:string)}@email.com" }
+    email
     avatar { 'MyString' }
     type { '' }
 

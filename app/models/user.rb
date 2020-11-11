@@ -7,6 +7,6 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :first_name, length: { minimum: 2 }
   validates :last_name, length: { minimum: 2 }
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, presence: true
   validates :email, format: { with: /.+@.+/, message: 'E-mail should contain an `@` symbol' }
 end

@@ -5,4 +5,7 @@ FactoryBot.define do
   sequence :email do |n|
     "email#{n}@factory.com"
   end
+  sequence :description do |n|
+    "description#{n}"
+  end
 end

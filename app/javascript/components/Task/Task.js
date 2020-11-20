@@ -24,7 +24,10 @@ const Task = ({ task }) => {
 };
 
 Task.propTypes = {
-  task: PropTypes.shape().isRequired,
+  task: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string
+  }).isRequired,
 };
 
 export default Task;

@@ -7,9 +7,10 @@ import KanbanBoard from '@lourenci/react-kanban';
 
 import '@lourenci/react-kanban/dist/styles.css';
 
-import AddPopup from 'components/AddPopup/AddPopup';
-import ColumnHeader from 'components/ColumnHeader/ColumnHeader';
+import AddPopup from 'components/AddPopup';
+import ColumnHeader from 'components/ColumnHeader';
 import Task from 'components/Task';
+import EditPopup from 'components/EditPopup';
 import TaskForm from 'forms/TaskForm';
 import TasksRepository from 'repositories/TasksRepository';
 
@@ -28,6 +29,7 @@ const STATES = [
 const MODES = {
   ADD: 'add',
   NONE: 'none',
+  EDIT: 'edit',
 };
 
 const initialBoard = {
@@ -44,6 +46,7 @@ const TaskBoard = () => {
   const [mode, setMode] = useState(MODES.NONE);
   const [board, setBoard] = useState(initialBoard);
   const [boardCards, setBoardCards] = useState({});
+  const [openedTaskId, setOpenedTaskId] = useState(null);
   useEffect(() => loadBoard(), []);
   useEffect(() => generateBoard(), [boardCards]);
 
@@ -117,13 +120,39 @@ const TaskBoard = () => {
     setMode(MODES.ADD);
   };
 
+  const handleOpenEditPopup = (task) => {
+    setOpenedTaskId(task.id);
+    setMode(MODES.EDIT);
+  };
+
   const handleClose = () => {
     setMode(MODES.NONE);
+    setOpenedTaskId(null);
   };
 
   const handleTaskCreate = (params) => {
     const attributes = TaskForm.attributesToSubmit(params);
     return TasksRepository.create(attributes).then(({ data: { task } }) => {
+      loadColumnInitial(task.state);
+      handleClose();
+    });
+  };
+
+  const loadTask = (id) => {
+    return TasksRepository.show(id).then(({ data: { task } }) => task);
+  };
+
+  const handleTaskUpdate = (task) => {
+    const attributes = TaskForm.attributesToSubmit(task);
+
+    return TasksRepository.update(task.id, attributes).then(() => {
+      loadColumnInitial(task.state);
+      handleClose();
+    });
+  };
+
+  const handleTaskDestroy = (task) => {
+    return TasksRepository.destroy(task.id).then(() => {
       loadColumnInitial(task.state);
       handleClose();
     });
@@ -135,13 +164,22 @@ const TaskBoard = () => {
         <AddIcon />
       </Fab>
       <KanbanBoard
-        renderCard={(card) => <Task task={card} />}
+        renderCard={(card) => <Task onClick={handleOpenEditPopup} task={card} />}
         renderColumnHeader={(column) => <ColumnHeader column={column} onLoadMore={loadColumnMore} />}
         onCardDragEnd={handleCardDragEnd}
       >
         {board}
       </KanbanBoard>
       {mode === MODES.ADD && <AddPopup onCreateCard={handleTaskCreate} onClose={handleClose} />}
+      {mode === MODES.EDIT && (
+        <EditPopup
+          onLoadCard={loadTask}
+          onDestroyCard={handleTaskDestroy}
+          onUpdateCard={handleTaskUpdate}
+          onClose={handleClose}
+          cardId={openedTaskId}
+        />
+      )}
     </>
   );
 };

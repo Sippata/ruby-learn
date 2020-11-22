@@ -13,6 +13,7 @@ import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 
 import TaskForm from 'forms/TaskForm';
+import UserSelect from '../UserSelect';
 
 import useStyles from './useStyles';
 
@@ -33,6 +34,7 @@ const AddPopup = ({ onClose, onCreateCard }) => {
     });
   };
   const handleChangeTextField = (fieldName) => (event) => changeTask({ ...task, [fieldName]: event.target.value });
+  const handleChangeSelect = (fieldName) => (option) => changeTask({ ...task, [fieldName]: option });
   const styles = useStyles();
 
   return (
@@ -65,6 +67,13 @@ const AddPopup = ({ onClose, onCreateCard }) => {
               label="Description"
               required
               margin="dense"
+            />
+            <UserSelect
+              label="Assignee"
+              value={task.assignee}
+              onChange={handleChangeSelect('assignee')}
+              error={has('assignee', errors)}
+              helperText={errors.assignee}
             />
           </div>
         </CardContent>

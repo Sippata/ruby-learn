@@ -196,6 +196,7 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     rexml (3.2.4)
+    rollbar (3.1.1)
     rubocop (1.0.0)
       parallel (~> 1.10)
       parser (>= 2.7.1.5)
@@ -305,6 +306,7 @@ DEPENDENCIES
   rails (~> 6.0.3, >= 6.0.3.3)
   ransack!
   responders
+  rollbar
   rubocop
   sass-rails (>= 6)
   selenium-webdriver

@@ -60,6 +60,9 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  config.action_mailer.delivery_method = :letter_opener_web
+  config.action_mailer.perform_caching = true
+
   # Enable Bullet.
   config.after_initialize do
     Bullet.enable = true

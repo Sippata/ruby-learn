@@ -9,11 +9,6 @@ export default new PropTypesPresenter(
     author: PropTypes.number,
     assignee: PropTypes.number,
     state: PropTypes.string,
-    transitions: PropTypes.array,
   },
-  {
-    title(task) {
-      return `Task # ${this.id(task)} [${this.name(task)}]`;
-    },
-  },
+  {},
 );

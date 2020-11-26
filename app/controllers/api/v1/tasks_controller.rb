@@ -3,7 +3,6 @@ class Api::V1::TasksController < Api::V1::ApplicationController
     tasks = Task.all
       .ransack(ransack_params)
       .result
-      .order(created_at: :desc)
       .page(page)
       .per(per_page)
 
@@ -18,9 +17,6 @@ class Api::V1::TasksController < Api::V1::ApplicationController
 
   def create
     task = current_user.my_tasks.new(task_params)
-    # `task.author_id` is nil after previous command
-    # when `params.task.author_id` is defined and is nil
-    task.author_id ||= current_user.id
     task.save
 
     respond_with(task, serializer: TaskSerializer, location: nil)
@@ -43,6 +39,6 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description, :author_id, :assignee_id, :state_event)
+    params.require(:task).permit(:name, :description, :author_id, :assignee_id, :state)
   end
 end

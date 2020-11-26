@@ -27,7 +27,6 @@
     "printWidth": 120
   }],
   "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
-  "no-use-before-define": 1,
   "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
   "import/no-unresolved": ["off"],
   "import/no-absolute-path": ["off"],

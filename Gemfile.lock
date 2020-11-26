@@ -148,6 +148,7 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.14.2)
     msgpack (1.3.3)
+    newrelic_rpm (6.14.0)
     nio4r (2.5.4)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
@@ -199,6 +200,7 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     rexml (3.2.4)
+    rollbar (3.1.1)
     rubocop (1.0.0)
       parallel (~> 1.10)
       parser (>= 2.7.1.5)
@@ -305,11 +307,13 @@ DEPENDENCIES
   js-routes
   kaminari
   listen (~> 3.2)
+  newrelic_rpm
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.3)
   ransack!
   responders
+  rollbar
   rubocop
   sass-rails (>= 6)
   selenium-webdriver

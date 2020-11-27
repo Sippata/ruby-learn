@@ -32,6 +32,8 @@ gem 'responders'
 gem 'active_model_serializers'
 gem 'webpacker-react', '~> 0.3.2'
 gem 'js-routes'
+gem 'rollbar'
+gem 'newrelic_rpm'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -41,6 +43,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'factory_bot_rails'
   gem 'rubocop', require: false
+  gem 'bullet'
 end
 
 group :development do

@@ -1,24 +1,6 @@
-# README
+[![Build Status](https://travis-ci.com/Sippata/task-manager.svg?branch=master)](https://travis-ci.com/Sippata/task-manager)
+[![Coverage Status](https://coveralls.io/repos/github/Sippata/task-manager/badge.svg?branch=master)](https://coveralls.io/github/Sippata/task-manager?branch=master)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Task manager
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Yet another task manager.

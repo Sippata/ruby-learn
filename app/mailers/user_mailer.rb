@@ -24,7 +24,8 @@ class UserMailer < ApplicationMailer
 
   def reset_password
     user = params[:user]
-    @token = JsonWebToken.encode({ user_id: user.id })
+    @token = JsonWebToken.encode({})
+    user.update({ token: @token })
 
     mail(to: user.email, subject: 'Password reset')
   end

@@ -10,5 +10,11 @@ class JsonWebToken
     rescue
       nil
     end
+
+    def expired?(token)
+      !JWT.decode(token, Rails.application.secrets.secret_key_base)
+    rescue ExpiredSignature
+      true
+    end
   end
 end

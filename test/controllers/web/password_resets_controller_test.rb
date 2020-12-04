@@ -19,16 +19,16 @@ class Web::PasswordResetsControllerTest < ActionController::TestCase
 
   test 'should get show' do
     user = create(:user)
-    token = JsonWebToken.encode({ user_id: user.id })
+    token = JsonWebToken.encode({})
     get :show, params: { id: token }
     assert_response :success
   end
 
   test 'should put update' do
-    user = create(:user, { password: generate(:string) })
+    token = JsonWebToken.encode({})
+    user = create(:user, { password: generate(:string), token: token })
     previous_password_digest = user.password_digest.dup
     new_password = generate(:string)
-    token = JsonWebToken.encode({ user_id: user.id })
     attr = {
       password: new_password,
       password_confirmation: new_password,

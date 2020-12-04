@@ -1,0 +1,6 @@
+= simple_form_for @password_reset, url: password_reset_path(@token), method: :put do |f|
+  p
+    = f.input :password
+    = f.input :password_confirmation
+  p
+    = f.button :submit, "Reset"

@@ -109,6 +109,7 @@ GEM
       railties (>= 4)
       sprockets-rails
     jsonapi-renderer (0.2.2)
+    jwt (2.2.2)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.1)
@@ -287,6 +288,7 @@ DEPENDENCIES
   factory_bot_rails
   jbuilder (~> 2.7)
   js-routes
+  jwt
   kaminari
   letter_opener
   letter_opener_web

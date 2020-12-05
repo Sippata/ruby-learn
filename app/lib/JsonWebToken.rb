@@ -7,14 +7,8 @@ class JsonWebToken
 
     def decode(token)
       JWT.decode(token, Rails.application.secrets.secret_key_base)[0]
-    rescue
+    rescue StandardError
       nil
-    end
-
-    def expired?(token)
-      !JWT.decode(token, Rails.application.secrets.secret_key_base)
-    rescue ExpiredSignature
-      true
     end
   end
 end

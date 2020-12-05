@@ -15,8 +15,9 @@ class Web::PasswordResetsController < Web::ApplicationController
   end
 
   def update
+    token = JsonWebToken.decode(params[:id])
     user = User.find_by_token(params[:id])
-    if user && !JsonWebToken.expired?(params[:id])
+    if user && token
       user.update({ **password_reset_params, token: nil })
     end
     redirect_to(new_session_path)

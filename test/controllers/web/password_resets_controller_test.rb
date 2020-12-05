@@ -40,4 +40,28 @@ class Web::PasswordResetsControllerTest < ActionController::TestCase
     user.reload
     assert_not_equal previous_password_digest, user.password_digest
   end
+
+  test 'token should be single-use' do
+    token = JsonWebToken.encode({})
+    user = create(:user, { password: generate(:string), token: token })
+    previous_password_digest = user.password_digest.dup
+    new_password = generate(:string)
+    attr = {
+      password: new_password,
+      password_confirmation: new_password,
+    }
+
+    put :update, params: { id: token, password_reset_form: attr }
+
+    assert_response :redirect
+    user.reload
+    assert_not_equal previous_password_digest, user.password_digest
+
+    previous_password_digest = user.password_digest.dup
+
+    put :update, params: { id: token, password_reset_form: attr }
+
+    user.reload
+    assert_equal previous_password_digest, user.password_digest
+  end
 end

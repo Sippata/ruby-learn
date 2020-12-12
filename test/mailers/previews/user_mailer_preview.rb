@@ -23,4 +23,12 @@ class UserMailerPreview < ActionMailer::Preview
 
     UserMailer.with(params).task_deleted
   end
+
+  def reset_password
+    token = JsonWebToken.encode
+    user = User.first
+    user.token = token
+    params = { user: user }
+    UserMailer.with(params).reset_password
+  end
 end

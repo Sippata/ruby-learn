@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2020_12_04_120123) do
     t.string "type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "token"
+    t.string "password_reset_token"
   end
 
 end

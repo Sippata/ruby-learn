@@ -18,15 +18,14 @@ class Web::PasswordResetsControllerTest < ActionController::TestCase
   end
 
   test 'should get show' do
-    user = create(:user)
-    token = JsonWebToken.encode({})
-    get :show, params: { id: token }
+    token = JsonWebToken.encode
+    get :edit, params: { token: token }
     assert_response :success
   end
 
   test 'should put update' do
-    token = JsonWebToken.encode({})
-    user = create(:user, { password: generate(:string), token: token })
+    token = JsonWebToken.encode
+    user = create(:user, { password: generate(:string), password_reset_token: token })
     previous_password_digest = user.password_digest.dup
     new_password = generate(:string)
     attr = {
@@ -34,7 +33,7 @@ class Web::PasswordResetsControllerTest < ActionController::TestCase
       password_confirmation: new_password,
     }
 
-    put :update, params: { id: token, password_reset_form: attr }
+    put :update, params: { token: token, password_reset_form: attr }
 
     assert_response :redirect
     user.reload
@@ -42,8 +41,8 @@ class Web::PasswordResetsControllerTest < ActionController::TestCase
   end
 
   test 'token should be single-use' do
-    token = JsonWebToken.encode({})
-    user = create(:user, { password: generate(:string), token: token })
+    token = JsonWebToken.encode
+    user = create(:user, { password: generate(:string), password_reset_token: token })
     previous_password_digest = user.password_digest.dup
     new_password = generate(:string)
     attr = {
@@ -51,7 +50,7 @@ class Web::PasswordResetsControllerTest < ActionController::TestCase
       password_confirmation: new_password,
     }
 
-    put :update, params: { id: token, password_reset_form: attr }
+    put :update, params: { token: token, password_reset_form: attr }
 
     assert_response :redirect
     user.reload
@@ -59,8 +58,26 @@ class Web::PasswordResetsControllerTest < ActionController::TestCase
 
     previous_password_digest = user.password_digest.dup
 
-    put :update, params: { id: token, password_reset_form: attr }
+    put :update, params: { token: token, password_reset_form: attr }
 
+    user.reload
+    assert_equal previous_password_digest, user.password_digest
+  end
+
+  test 'token expiration' do
+    token = JsonWebToken.encode
+    travel 24.hours
+    user = create(:user, { password: generate(:string), password_reset_token: token })
+    previous_password_digest = user.password_digest.dup
+    new_password = generate(:string)
+    attr = {
+      password: new_password,
+      password_confirmation: new_password,
+    }
+
+    put :update, params: { token: token, password_reset_form: attr }
+
+    assert_response :redirect
     user.reload
     assert_equal previous_password_digest, user.password_digest
   end

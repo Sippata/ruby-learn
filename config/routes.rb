@@ -7,7 +7,10 @@ Rails.application.routes.draw do
     resource :board, only: :show
     resource :session, only: [:new, :create, :destroy]
     resource :developers, only: [:new, :create]
-    resources :password_resets, only: [:new, :create, :show, :update], constraints: { id: /[[:alnum:][:punct:]]+/ }
+    resources :password_resets,
+              only: [:new, :create, :edit, :update],
+              constraints: { id: /[[:alnum:][:punct:]]+/ },
+              param: :token
   end
 
   namespace :admin do

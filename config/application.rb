@@ -15,7 +15,9 @@ module App
     config.assets.paths << Rails.root.join('node_modules')
 
     # Setup host for mailer
-    config.action_mailer.default_url_options = { host: ENV['HOST'] }
+    config.action_mailer.default_url_options = {
+      host: ENV['RAILS_ENV'] == 'test' ? 'localhost:3000' : ENV['HOST']
+    }
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

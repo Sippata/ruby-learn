@@ -32,6 +32,7 @@ gem 'responders'
 gem 'active_model_serializers'
 gem 'webpacker-react', '~> 0.3.2'
 gem 'js-routes'
+gem 'jwt'
 gem 'rollbar'
 gem 'newrelic_rpm'
 
@@ -50,6 +51,8 @@ group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.2'
+  gem 'letter_opener'
+  gem 'letter_opener_web'
 end
 
 group :test do

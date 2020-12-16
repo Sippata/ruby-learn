@@ -1,0 +1,5 @@
+= simple_form_for @user_email, url: password_resets_path, method: :post do |f|
+  p
+    = f.input :email
+  p
+    = f.button :submit, "Send"

@@ -120,4 +120,5 @@ Rails.application.configure do
     authentication: ENV['MAILER_AUTHENTICATION'],
     enable_starttls_auto: true,
   }
+  config.action_mailer.default_url_options = { host: ENV['MAILER_HOST'] }
 end

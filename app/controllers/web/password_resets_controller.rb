@@ -5,8 +5,10 @@ class Web::PasswordResetsController < Web::ApplicationController
 
   def create
     user = UserEmailForm.new(user_email_params).user
-    user.update({ password_reset_token: JsonWebToken.encode })
-    UserMailer.with({ user: user }).reset_password.deliver_now if user
+    if user
+      user.update({ password_reset_token: JsonWebToken.encode })
+      UserMailer.with({ user: user }).reset_password.deliver_now
+    end
     redirect_to(new_session_path)
   end
 
